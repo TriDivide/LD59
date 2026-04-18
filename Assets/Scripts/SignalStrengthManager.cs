@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SignalStrengthManager : MonoBehaviour {
 
 
     private GameObject homeBase, player;
 
-    public float distance;
+    [SerializeField] private Image signalBar;
+
+    [SerializeField] private float maxDistance = 100f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -20,6 +24,6 @@ public class SignalStrengthManager : MonoBehaviour {
 
         float d = Mathf.Sqrt(Mathf.Pow(difference.x, 2f) + Mathf.Pow(difference.y, 2f));
 
-        distance = Mathf.Floor(d);
+        signalBar.fillAmount = (maxDistance - d) / maxDistance;
     }
 }
