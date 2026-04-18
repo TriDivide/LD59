@@ -65,4 +65,11 @@ public class PlayerController : MonoBehaviour {
             transform.Rotate(-rotationSpeed * Time.deltaTime * transform.forward);
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Astroid") {
+            Destroy(collision.gameObject);
+        }
+    }
 }
