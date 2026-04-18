@@ -45,8 +45,6 @@ public class PlayerController : MonoBehaviour {
         if (isAlive && isBraking && (!isAccelerating || !isReversing)) {
             rb.linearVelocity *= 0.95f;
             rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxVelocity);
-
-            print(rb.linearVelocity);
         }
 
 
