@@ -69,7 +69,25 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Astroid") {
-            Destroy(collision.gameObject);
+            if (InventoryModel.Instance.playerInventory < InventoryModel.Instance.maxPlayerInventory) {
+                Destroy(collision.gameObject);
+                InventoryModel.Instance.addToLocalInventory(1);
+            }
         }
+
+        if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
+            InvokeRepeating("DepositOreRoutine", 0f, 0.5f);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
+            CancelInvoke("DepositOreRoutine");
+        }
+    }
+
+
+    private void DepositOreRoutine() {
+        InventoryModel.Instance.transferToBaseInventory(1);
     }
 }
