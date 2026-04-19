@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Base
   - Asteroid
-  - Astroid
   layers:
   - Default
   - TransparentFX
