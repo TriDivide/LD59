@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AstroidSpawner : MonoBehaviour {
+public class AsteroidSpawner : MonoBehaviour {
     
     [SerializeField] private GameObject asteroid;
 
@@ -9,13 +9,13 @@ public class AstroidSpawner : MonoBehaviour {
     [SerializeField] private int maxNumberEntities = 10;
 
     void Start() {
-        InvokeRepeating("SpawnAstroid", initialSpawnDelay, spawnRepeatDelaySecs);
+        InvokeRepeating("SpawnAsteroid", initialSpawnDelay, spawnRepeatDelaySecs);
     }
 
 
-    private void SpawnAstroid() {
+    private void SpawnAsteroid() {
         if (asteroid != null) {
-            if (GameObject.FindGameObjectsWithTag("Astroid").Length < maxNumberEntities) { 
+            if (GameObject.FindGameObjectsWithTag("Asteroid").Length < maxNumberEntities) { 
                 Instantiate(asteroid, transform.position, transform.rotation);
             }
         }
