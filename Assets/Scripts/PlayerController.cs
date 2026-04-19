@@ -73,21 +73,31 @@ public class PlayerController : MonoBehaviour {
                 Destroy(collision.gameObject);
                 InventoryModel.Instance.addToLocalInventory(1);
             }
+            else {
+                print("oh dear");
+                HealthModel.Instance.updateCurrentRobotHealth(-10);
+            }
         }
 
         if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
             InvokeRepeating("DepositOreRoutine", 0f, 0.5f);
+            InvokeRepeating("RestoreHealth", 1f, 0.5f);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
             CancelInvoke("DepositOreRoutine");
+            CancelInvoke("RestoreHealth");
         }
     }
 
 
     private void DepositOreRoutine() {
         InventoryModel.Instance.transferToBaseInventory(1);
+    }
+
+    private void RestoreHealth() {
+        HealthModel.Instance.updateCurrentRobotHealth(+10)
     }
 }

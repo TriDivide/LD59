@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SignalStrengthManager : MonoBehaviour {
+public class UIBarManager: MonoBehaviour {
 
 
     private GameObject homeBase, player;
 
-    [SerializeField] private Image signalBar;
+    [SerializeField] private Image signalBar, healthBar;
 
     [SerializeField] private float maxDistance = 100f;
 
@@ -25,5 +25,8 @@ public class SignalStrengthManager : MonoBehaviour {
         float d = Mathf.Sqrt(Mathf.Pow(difference.x, 2f) + Mathf.Pow(difference.y, 2f));
 
         signalBar.fillAmount = (maxDistance - d) / maxDistance;
+
+
+        healthBar.fillAmount = HealthModel.Instance.currentRobotHealth >= 0 ? (HealthModel.Instance.currentRobotHealth / 100f) : 0f;
     }
 }
