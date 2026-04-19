@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AstroidController : MonoBehaviour {
     
-    [SerializeField] private float minRotationSpeed, maxRotationSpeed;
+    [SerializeField] private float minRotationSpeed, maxRotationSpeed, minSpeed, maxSpeed;
 
     [SerializeField] private Rigidbody2D rb;
 
@@ -10,7 +10,11 @@ public class AstroidController : MonoBehaviour {
         minRotationSpeed = 10.0f;
         maxRotationSpeed = 100.0f;
 
+        minSpeed = 1f;
+        maxSpeed = 10f;
+
         StartRotation();
+        StartMovement();
     }
 
     // Update is called once per frame
@@ -31,6 +35,9 @@ public class AstroidController : MonoBehaviour {
     }
 
     private void StartMovement() {
-        
+        Vector2 direction = Random.insideUnitCircle.normalized;
+
+        float force = Random.Range(minSpeed, maxSpeed);
+        rb.AddForce(direction * force, ForceMode2D.Impulse);
     }
 }
