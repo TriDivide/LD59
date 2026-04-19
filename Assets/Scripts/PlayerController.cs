@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour {
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Astroid") {
+        if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Asteroid") {
             if (InventoryModel.Instance.playerInventory < InventoryModel.Instance.maxPlayerInventory) {
                 Destroy(collision.gameObject);
                 InventoryModel.Instance.addToLocalInventory(1);
