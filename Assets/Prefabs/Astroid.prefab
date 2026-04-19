@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6495266855353305455}
   m_Layer: 0
   m_Name: Astroid
-  m_TagString: Untagged
+  m_TagString: Astroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,4 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AstroidController
   minRotationSpeed: 0
   maxRotationSpeed: 0
+  minSpeed: 0
+  maxSpeed: 0
   rb: {fileID: 4251507703771476176}

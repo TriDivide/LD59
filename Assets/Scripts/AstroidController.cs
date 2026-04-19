@@ -39,5 +39,6 @@ public class AstroidController : MonoBehaviour {
 
         float force = Random.Range(minSpeed, maxSpeed);
         rb.AddForce(direction * force, ForceMode2D.Impulse);
+        
     }
 }
