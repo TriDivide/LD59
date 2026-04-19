@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public class AstroidController : MonoBehaviour {
+    
+    [SerializeField] private float minRotationSpeed, maxRotationSpeed;
+
+    [SerializeField] private Rigidbody2D rb;
+
+    void Start() {
+        minRotationSpeed = 10.0f;
+        maxRotationSpeed = 100.0f;
+
+        StartRotation();
+    }
+
+    // Update is called once per frame
+    void Update() {
+        
+    }
+
+    private void StartRotation() {
+        if (rb != null) {
+            float spin = Random.Range(minRotationSpeed, maxRotationSpeed);
+
+            if (Random.value > 0.5f) {
+                spin *= -1f;
+            }
+
+            rb.angularVelocity = spin;
+        }
+    }
+
+    private void StartMovement() {
+        
+    }
+}
