@@ -3,10 +3,15 @@ using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour {
     
-    public Text personnalInventoryText, processedOreText, livesCountText;
+    [SerializeField]
+    private Text personnalInventoryText, processedOreText, livesCountText, disconnectedText;
+
+    [SerializeField]
+    private GameObject disconnectedTextContainer;
 
     void Start() {
         InventoryModel.Instance.addToLocalInventory(0);
+        disconnectedTextContainer.SetActive(false);
     }
 
     
@@ -21,6 +26,14 @@ public class TextManager : MonoBehaviour {
         
         if (livesCountText != null) {
             livesCountText.text = "Mine-Bots Remaining: " + HealthModel.Instance.numberOfLives.ToString() + "/" + HealthModel.Instance.maxNumberOfLives.ToString();
+        }
+
+        if (disconnectedTextContainer != null) {
+            disconnectedTextContainer.SetActive(!HealthModel.Instance.isConnected);
+        }
+
+        if (disconnectedText != null) {
+            disconnectedText.text = "Lost signal to Astro-Miner!\n There are " + HealthModel.Instance.numberOfLives + " remaining miners at home station.";
         }
     }
 }

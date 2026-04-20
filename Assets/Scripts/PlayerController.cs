@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    private bool isAlive = true;
     private bool isAccelerating = false;
     private bool isReversing = false;
 
@@ -20,18 +19,23 @@ public class PlayerController : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() { 
         rb = GetComponent<Rigidbody2D>();
+        HealthModel.Instance.setIsConnected(true);
     }
 
     // Update is called once per frame
     void Update() {  
-        if (isAlive) {
+        if (HealthModel.Instance.isConnected) {
             HandleAcceleration();
             HandleRotation();
+            HandleDistance();
         }
+
+
     }
 
 
     private void FixedUpdate() {
+        bool isAlive = HealthModel.Instance.isConnected;
         if (isAlive && isAccelerating) {
             rb.AddForce(acceleration * transform.up);
             rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxVelocity);
@@ -45,6 +49,10 @@ public class PlayerController : MonoBehaviour {
         if (isAlive && isBraking && (!isAccelerating || !isReversing)) {
             rb.linearVelocity *= 0.95f;
             rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, maxVelocity);
+        }
+
+        if (!isAlive) {
+            rb.constraints = RigidbodyConstraints2D.None;
         }
 
 
@@ -66,26 +74,34 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void HandleDistance() {
+        if (HealthModel.Instance.distance <= 0) {
+            HealthModel.Instance.setIsConnected(false);
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Asteroid") {
-            if (InventoryModel.Instance.playerInventory < InventoryModel.Instance.maxPlayerInventory) {
-                Destroy(collision.gameObject);
-                InventoryModel.Instance.addToLocalInventory(1);
-            }
-            else {
-                HealthModel.Instance.updateCurrentRobotHealth(-30);
-                
-                if (HealthModel.Instance.currentRobotHealth <= 0) {
-                    HealthModel.Instance.updateLives(-1);
-                    Respawn();
+        if (HealthModel.Instance.isConnected) {
+            if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Asteroid") {
+                if (InventoryModel.Instance.playerInventory < InventoryModel.Instance.maxPlayerInventory) {
+                    Destroy(collision.gameObject);
+                    InventoryModel.Instance.addToLocalInventory(1);
+                }
+                else {
+                    HealthModel.Instance.updateCurrentRobotHealth(-30);
+                    
+                    if (HealthModel.Instance.currentRobotHealth <= 0) {
+                        HealthModel.Instance.setIsConnected(false);
+                        HealthModel.Instance.updateLives(-1);
+                    }
                 }
             }
-        }
 
-        if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
-            InvokeRepeating("DepositOreRoutine", 0f, 0.5f);
-            InvokeRepeating("RestoreHealth", 1f, 0.5f);
+            if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
+                InvokeRepeating("DepositOreRoutine", 0f, 0.5f);
+                InvokeRepeating("RestoreHealth", 1f, 0.5f);
+            }
         }
     }
 
@@ -96,9 +112,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void Respawn() {
 
-    }
 
 
     private void DepositOreRoutine() {

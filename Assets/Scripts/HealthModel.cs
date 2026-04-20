@@ -10,8 +10,21 @@ public class HealthModel {
     private float maximumPlayerHealth = 100f;
     public int maxNumberOfLives {get; private set; } = 3;
 
+    public float distance { get; private set; }
+
+    public float distanceWarning { get; private set; }
+
+    public bool isConnected { get; private set; }
+
+
     public HealthModel() {
         reset();
+        distance = 1f;
+        distanceWarning = 0.2f;
+    }
+
+    public void setIsConnected(bool newValue) {
+        isConnected = newValue;
     }
 
 
@@ -31,6 +44,10 @@ public class HealthModel {
         else {
             
         }
+    }
+
+    public void updateDistance(float distance) {
+        this.distance = distance;
     }
 
     public void updateCurrentRobotHealth(float robotHealthUpdate) {
