@@ -48,6 +48,8 @@ public class HealthSignalManager: MonoBehaviour {
             Instantiate(deadRobot, player.transform.position, player.transform.rotation);
 
             player.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
             player.transform.position = spawnAnchor.transform.position;
             player.transform.rotation = Quaternion.identity;
             HealthModel.Instance.resetRobotHealth();

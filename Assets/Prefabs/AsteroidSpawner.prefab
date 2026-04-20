@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   asteroid: {fileID: 4372188525939965219, guid: 9ec0a5ca8007b1f439f2b28e8c97bd32, type: 3}
+  mediumAsteroid: {fileID: 5046631417517943416, guid: 5c88119c190c6bf43ac6122cd0bacac9, type: 3}
   spawnRepeatDelaySecs: 3
   initialSpawnDelay: 5
-  maxNumberEntities: 50
+  maxNumberSmallEntities: 50
+  maxNumberMediumEntities: 20

@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class AsteroidSpawner : MonoBehaviour {
     
-    [SerializeField] private GameObject asteroid;
+    [SerializeField] private GameObject asteroid, mediumAsteroid;
 
     [SerializeField] private float spawnRepeatDelaySecs = 3f;
     [SerializeField] private float initialSpawnDelay = 5f;
-    [SerializeField] private int maxNumberEntities = 10;
+    [SerializeField] private int maxNumberSmallEntities = 50;
+    [SerializeField] private int maxNumberMediumEntities = 20;
 
     void Start() {
         InvokeRepeating("SpawnAsteroid", initialSpawnDelay, spawnRepeatDelaySecs);
@@ -14,10 +15,19 @@ public class AsteroidSpawner : MonoBehaviour {
 
 
     private void SpawnAsteroid() {
-        if (asteroid != null) {
-            if (GameObject.FindGameObjectsWithTag("Asteroid").Length < maxNumberEntities) { 
-                Instantiate(asteroid, transform.position, transform.rotation);
+        if (asteroid != null && mediumAsteroid != null) {
+
+            if(Random.value <= 0.25) {
+                if (GameObject.FindGameObjectsWithTag("MediumAsteroid").Length < maxNumberMediumEntities) { 
+                    Instantiate(mediumAsteroid, transform.position, transform.rotation);
+                }
             }
+            else {
+                if (GameObject.FindGameObjectsWithTag("Asteroid").Length < maxNumberSmallEntities) { 
+                    Instantiate(asteroid, transform.position, transform.rotation);
+                }
+            }
+
         }
     }
 }

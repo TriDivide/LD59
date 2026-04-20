@@ -89,13 +89,12 @@ public class PlayerController : MonoBehaviour {
                     InventoryModel.Instance.addToLocalInventory(1);
                 }
                 else {
-                    HealthModel.Instance.updateCurrentRobotHealth(-30);
-                    
-                    if (HealthModel.Instance.currentRobotHealth <= 0) {
-                        HealthModel.Instance.setIsConnected(false);
-                        HealthModel.Instance.updateLives(-1);
-                    }
+                    HealthModel.Instance.updateCurrentRobotHealth(-20);
                 }
+            }
+
+            if (collision.gameObject.tag == "MediumAsteroid") {
+                HealthModel.Instance.updateCurrentRobotHealth(-40);
             }
 
             if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {

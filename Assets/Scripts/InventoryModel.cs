@@ -14,7 +14,7 @@ public class InventoryModel {
         playerInventory = 0;
         baseInventory = 0;
 
-        maxPlayerInventory = 0;
+        maxPlayerInventory = 5;
     }
 
 
