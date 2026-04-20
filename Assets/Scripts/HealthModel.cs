@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class HealthModel {
     public static HealthModel Instance { get; private set; } = new HealthModel();
 
@@ -16,6 +17,8 @@ public class HealthModel {
 
     public bool isConnected { get; private set; }
 
+    public bool outOfLives { get; private set; }
+
 
     public HealthModel() {
         reset();
@@ -31,6 +34,7 @@ public class HealthModel {
     public void reset() {
         resetRobotHealth();
         numberOfLives = maxNumberOfLives;
+        outOfLives = false;
     }
 
 
@@ -42,7 +46,7 @@ public class HealthModel {
             }
         }
         else {
-            
+            outOfLives = true;
         }
     }
 

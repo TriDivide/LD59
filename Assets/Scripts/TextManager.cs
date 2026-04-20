@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class TextManager : MonoBehaviour {
     
@@ -8,6 +10,8 @@ public class TextManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject disconnectedTextContainer;
+
+    private bool hasStartedGameOver = false;
 
     void Start() {
         InventoryModel.Instance.addToLocalInventory(0);
@@ -32,8 +36,21 @@ public class TextManager : MonoBehaviour {
             disconnectedTextContainer.SetActive(!HealthModel.Instance.isConnected);
         }
 
-        if (disconnectedText != null) {
+        if (disconnectedText != null && !HealthModel.Instance.outOfLives) {
             disconnectedText.text = "Lost signal to Astro-Miner!\n There are " + HealthModel.Instance.numberOfLives + " remaining miners at home station.";
         }
+
+
+        if (HealthModel.Instance.outOfLives && !hasStartedGameOver) {
+            hasStartedGameOver = true;
+            StartCoroutine(goToGameOver());
+        }
     }
+
+
+    IEnumerator goToGameOver() {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(sceneName: "Gameover");
+        yield return null;
+    }   
 }

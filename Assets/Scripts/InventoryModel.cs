@@ -17,6 +17,13 @@ public class InventoryModel {
         maxPlayerInventory = 5;
     }
 
+    public void Reset() {
+        playerInventory = 0;
+        baseInventory = 0;
+
+        maxPlayerInventory = 5;
+    }
+
 
     public void addToLocalInventory(int value) {
         if (playerInventory < maxPlayerInventory) {
