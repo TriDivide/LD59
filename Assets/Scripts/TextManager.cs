@@ -11,7 +11,6 @@ public class TextManager : MonoBehaviour {
 
     
     void Update() {
-
         if (personnalInventoryText != null) {
             personnalInventoryText.text = "Ore collected: " + InventoryModel.Instance.playerInventory.ToString() + "/" + InventoryModel.Instance.maxPlayerInventory.ToString();
         }

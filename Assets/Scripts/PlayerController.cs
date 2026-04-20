@@ -98,6 +98,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void RestoreHealth() {
-        HealthModel.Instance.updateCurrentRobotHealth(+10)
+        HealthModel.Instance.updateCurrentRobotHealth(+10);
     }
 }
