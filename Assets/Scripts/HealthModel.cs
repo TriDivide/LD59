@@ -8,6 +8,7 @@ public class HealthModel {
     public int numberOfLives { get; private set; }
 
     private float maximumPlayerHealth = 100f;
+    public int maxNumberOfLives {get; private set; } = 3;
 
     public HealthModel() {
         reset();
@@ -16,13 +17,16 @@ public class HealthModel {
 
     public void reset() {
         resetRobotHealth();
-        numberOfLives = 3;
+        numberOfLives = maxNumberOfLives;
     }
 
 
     public void updateLives(int live) {
         if (numberOfLives > 0) {
             numberOfLives += live;
+            if (live < 0) {
+                resetRobotHealth();
+            }
         }
         else {
             
@@ -30,9 +34,11 @@ public class HealthModel {
     }
 
     public void updateCurrentRobotHealth(float robotHealthUpdate) {
-        if (currentRobotHealth < currentRobotHealth) {
-        currentRobotHealth += robotHealthUpdate;
-        Debug.Log(currentRobotHealth);
+        if (robotHealthUpdate > 0 && currentRobotHealth == maximumPlayerHealth) {
+            return;
+        }
+        if (currentRobotHealth <= maximumPlayerHealth) {
+            currentRobotHealth += robotHealthUpdate;
         }
         else {
             resetRobotHealth();

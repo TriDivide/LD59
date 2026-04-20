@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour {
     
-    public Text personnalInventoryText, processedOreText;
+    public Text personnalInventoryText, processedOreText, livesCountText;
 
     void Start() {
         InventoryModel.Instance.addToLocalInventory(0);
@@ -19,5 +19,8 @@ public class TextManager : MonoBehaviour {
             processedOreText.text = "Ore processed: " + InventoryModel.Instance.baseInventory.ToString();
         }
         
+        if (livesCountText != null) {
+            livesCountText.text = "Mine-Bots Remaining: " + HealthModel.Instance.numberOfLives.ToString() + "/" + HealthModel.Instance.maxNumberOfLives.ToString();
+        }
     }
 }

@@ -74,8 +74,12 @@ public class PlayerController : MonoBehaviour {
                 InventoryModel.Instance.addToLocalInventory(1);
             }
             else {
-                print("oh dear");
-                HealthModel.Instance.updateCurrentRobotHealth(-10);
+                HealthModel.Instance.updateCurrentRobotHealth(-30);
+                
+                if (HealthModel.Instance.currentRobotHealth <= 0) {
+                    HealthModel.Instance.updateLives(-1);
+                    Respawn();
+                }
             }
         }
 
@@ -90,6 +94,10 @@ public class PlayerController : MonoBehaviour {
             CancelInvoke("DepositOreRoutine");
             CancelInvoke("RestoreHealth");
         }
+    }
+
+    private void Respawn() {
+
     }
 
 
