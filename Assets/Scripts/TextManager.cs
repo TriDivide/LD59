@@ -29,7 +29,7 @@ public class TextManager : MonoBehaviour {
         }
         
         if (livesCountText != null) {
-            livesCountText.text = "Mine-Bots Remaining: " + HealthModel.Instance.numberOfLives.ToString() + "/" + HealthModel.Instance.maxNumberOfLives.ToString();
+            livesCountText.text = "Astro-Miners Remaining: " + HealthModel.Instance.numberOfLives.ToString() + "/" + HealthModel.Instance.maxNumberOfLives.ToString();
         }
 
         if (disconnectedTextContainer != null) {

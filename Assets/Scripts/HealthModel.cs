@@ -60,7 +60,7 @@ public class HealthModel {
         }
         if (currentRobotHealth <= maximumPlayerHealth) {
             currentRobotHealth += robotHealthUpdate;
-            if (currentRobotHealth <= 0) {
+            if (currentRobotHealth <= 0 && isConnected) {
                 setIsConnected(false);
                 updateLives(-1);
             }

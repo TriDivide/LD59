@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float maxVelocity = 10f;
     [SerializeField] private float rotationSpeed = 180f;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioSource depositSource, moveSource, collideSource, disconnectSource, mineSource, regenSource;
+    [SerializeField] private AudioClip depositClip, collideClip, disconnectClip, mineClip, regenClip;
+
 
 
     private bool isAccelerating = false;
@@ -63,6 +67,8 @@ public class PlayerController : MonoBehaviour {
         isAccelerating = Input.GetKey(KeyCode.UpArrow);
         isReversing = Input.GetKey(KeyCode.DownArrow);
         isBraking = Input.GetKey(KeyCode.Space);
+
+
     }
 
     private void HandleRotation() {
@@ -76,6 +82,7 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleDistance() {
         if (HealthModel.Instance.distance <= 0) {
+            HealthModel.Instance.updateLives(-1);
             HealthModel.Instance.setIsConnected(false);
         }
     }
@@ -86,15 +93,24 @@ public class PlayerController : MonoBehaviour {
             if(collision.GetType() == typeof(CircleCollider2D) && collision.gameObject.tag == "Asteroid") {
                 if (InventoryModel.Instance.playerInventory < InventoryModel.Instance.maxPlayerInventory) {
                     Destroy(collision.gameObject);
+                    mineSource.PlayOneShot(mineClip);
                     InventoryModel.Instance.addToLocalInventory(1);
                 }
                 else {
+                    collideSource.PlayOneShot(collideClip);
                     HealthModel.Instance.updateCurrentRobotHealth(-20);
+                    if (!HealthModel.Instance.isConnected) {
+                        disconnectSource.PlayOneShot(disconnectClip);
+                    }
                 }
             }
 
             if (collision.gameObject.tag == "MediumAsteroid") {
+                collideSource.PlayOneShot(collideClip);
                 HealthModel.Instance.updateCurrentRobotHealth(-40);
+                    if (!HealthModel.Instance.isConnected) {
+                        disconnectSource.PlayOneShot(disconnectClip);
+                    }
             }
 
             if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
@@ -106,6 +122,9 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision) {
         if (collision.GetType() == typeof(BoxCollider2D) && collision.gameObject.tag == "Base") {
+            regenSource.Stop();
+            depositSource.Stop();
+
             CancelInvoke("DepositOreRoutine");
             CancelInvoke("RestoreHealth");
         }
@@ -115,10 +134,12 @@ public class PlayerController : MonoBehaviour {
 
 
     private void DepositOreRoutine() {
+        //depositSource.PlayOneShot(depositClip);
         InventoryModel.Instance.transferToBaseInventory(1);
     }
 
     private void RestoreHealth() {
+       // regenSource.PlayOneShot(regenClip);
         HealthModel.Instance.updateCurrentRobotHealth(+10);
     }
 }

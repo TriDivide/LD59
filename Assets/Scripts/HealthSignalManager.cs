@@ -13,6 +13,11 @@ public class HealthSignalManager: MonoBehaviour {
 
     [SerializeField] private GameObject signalWarning, spawnAnchor, deadRobot;
 
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip clip;
+
+    [SerializeField] private AudioSource warningSource;
+
     
 
 
@@ -39,12 +44,22 @@ public class HealthSignalManager: MonoBehaviour {
         bool showWarning = (HealthModel.Instance.distance < HealthModel.Instance.distanceWarning && HealthModel.Instance.isConnected);
         signalWarning.SetActive(showWarning);
 
+        if (!warningSource.isPlaying) {
+            if (showWarning) {
+                warningSource.Play();
+            }
+        }
+        else {
+            if (!showWarning) {
+                warningSource.Stop();
+            }
+        }
         healthBar.fillAmount = HealthModel.Instance.currentRobotHealth >= 0 ? (HealthModel.Instance.currentRobotHealth / 100f) : 0f;
     }
 
     public void Respawn() {
+        source.PlayOneShot(clip);
         if (spawnAnchor != null & player != null) {
-            Debug.Log("Spawn anchor is not null");
             Instantiate(deadRobot, player.transform.position, player.transform.rotation);
 
             player.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
