@@ -21,7 +21,7 @@ public class GameOverMenuController: MonoBehaviour {
         source.PlayOneShot(clip);
         InventoryModel.Instance.Reset();
         HealthModel.Instance.reset();
-        SceneManager.LoadScene(sceneName: "Main");
+        SceneManager.LoadScene(sceneName: "StartMenu");
     }
 
     public void Quit() {

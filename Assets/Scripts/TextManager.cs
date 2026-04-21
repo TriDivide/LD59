@@ -29,7 +29,7 @@ public class TextManager : MonoBehaviour {
         }
         
         if (livesCountText != null) {
-            livesCountText.text = "Astro-Miners Remaining: " + HealthModel.Instance.numberOfLives.ToString() + "/" + HealthModel.Instance.maxNumberOfLives.ToString();
+            livesCountText.text = "Robo-Miners Remaining: " + HealthModel.Instance.numberOfLives.ToString() + "/" + HealthModel.Instance.maxNumberOfLives.ToString();
         }
 
         if (disconnectedTextContainer != null) {
@@ -37,7 +37,7 @@ public class TextManager : MonoBehaviour {
         }
 
         if (disconnectedText != null && !HealthModel.Instance.outOfLives) {
-            disconnectedText.text = "Lost signal to Astro-Miner!\n There are " + HealthModel.Instance.numberOfLives + " remaining miners at home station.";
+            disconnectedText.text = "Lost signal to Robo-Miner!\n There are " + HealthModel.Instance.numberOfLives + " remaining miners at home station.";
         }
 
 
